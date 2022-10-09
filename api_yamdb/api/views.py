@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from api_yamdb.settings import ADMIN_EMAIL
-from reviews.models import User, Category, Genre, Review, Title
+from reviews.models import Category, Genre, Review, Title, User
 
 from .filters import TitleFilter
 from .mixins import ListCreateDestroyViewSet
@@ -167,4 +167,3 @@ class TitleViewSet(viewsets.ModelViewSet):
         if self.action in ('create', 'update', 'partial_update'):
             return TitlePostSerializer
         return TitleSerializer
-
