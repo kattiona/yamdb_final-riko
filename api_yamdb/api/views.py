@@ -18,7 +18,6 @@ from .serializers import (AdminUserSerializer, CategorySerializer,
                           CommentSerializer, GenreSerializer, ReviewSerializer,
                           SignupSerializer, TitlePostSerializer,
                           TitleSerializer, TokenSerializer, UserSerializer)
-
 from reviews.models import Category, Genre, Review, Title, User
 
 
