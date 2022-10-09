@@ -8,6 +8,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from api_yamdb.settings import ADMIN_EMAIL
+from reviews.models import Category, Genre, Review, Title, User
 from .filters import TitleFilter
 from .mixins import ListCreateDestroyViewSet
 from .permissions import (IsAuthorOrReadOnly, IsRoleAdmin, IsRoleModerator,
@@ -17,8 +19,6 @@ from .serializers import (AdminUserSerializer, CategorySerializer,
                           SignupSerializer, TitlePostSerializer,
                           TitleSerializer, TokenSerializer, UserSerializer)
 
-from api_yamdb.settings import ADMIN_EMAIL
-from reviews.models import Category, Genre, Review, Title, User
 
 def send_confirmation_code(user):
     confirmation_code = default_token_generator.make_token(user)
