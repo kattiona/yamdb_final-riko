@@ -9,7 +9,6 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from api_yamdb.settings import ADMIN_EMAIL
-
 from reviews.models import Category, Genre, Review, Title, User
 
 from .filters import TitleFilter
