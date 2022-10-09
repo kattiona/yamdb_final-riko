@@ -1,5 +1,6 @@
-# Сервис YaMDb
-![yamdb workflow](https://github.com/Rinko69/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
+# Сервис YaMD
+
+b
 ____
 
 Проект YaMDb собирает отзывы пользователей на произведения. Произведения делятся на категории: «Книги», «Фильмы», «Музыка». Список категорий может быть расширен администратором.
