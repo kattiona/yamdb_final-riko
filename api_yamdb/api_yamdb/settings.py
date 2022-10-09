@@ -1,6 +1,7 @@
 import os
 from datetime import timedelta
 from dotenv import load_dotenv
+
 from pathlib import Path
 
 dotenv_path = Path('yamdb_final/infra/.env')
