@@ -9,8 +9,6 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from api_yamdb.settings import ADMIN_EMAIL
-from reviews.models import Category, Genre
-from reviews.models import Review, Title, User
 
 from .filters import TitleFilter
 from .mixins import ListCreateDestroyViewSet
@@ -20,6 +18,8 @@ from .serializers import (AdminUserSerializer, CategorySerializer,
                           CommentSerializer, GenreSerializer, ReviewSerializer,
                           SignupSerializer, TitlePostSerializer,
                           TitleSerializer, TokenSerializer, UserSerializer)
+
+from reviews.models import Category, Genre, Review, Title, User
 
 
 def send_confirmation_code(user):
