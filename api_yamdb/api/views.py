@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from api_yamdb.settings import ADMIN_EMAIL
-from reviews.models import Category, Genre, Review, Title, User
+from reviews.models import User, Category, Genre, Review, Title, 
 
 from .filters import TitleFilter
 from .mixins import ListCreateDestroyViewSet
@@ -101,20 +101,6 @@ def token(request):
     )
 
 
-class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all().annotate(
-        Avg("reviews__score")
-    )
-    serializer_class = TitleSerializer
-    permission_classes = (IsRoleAdmin | ReadOnly,)
-    filterset_class = TitleFilter
-
-    def get_serializer_class(self):
-        if self.action in ('create', 'update', 'partial_update'):
-            return TitlePostSerializer
-        return TitleSerializer
-
-
 class CategoryViewSet(ListCreateDestroyViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -122,6 +108,25 @@ class CategoryViewSet(ListCreateDestroyViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
     lookup_field = 'slug'
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+    permission_classes = (
+        IsRoleAdmin | IsRoleModerator | IsAuthorOrReadOnly,
+    )
+
+    def get_queryset(self):
+        review_id = self.kwargs.get('review_id')
+        title_id = self.kwargs.get('title_id')
+        review = get_object_or_404(Review, id=review_id, title=title_id)
+        return review.comments.all()
+
+    def perform_create(self, serializer):
+        review_id = self.kwargs.get('review_id')
+        title_id = self.kwargs.get('title_id')
+        review = get_object_or_404(Review, id=review_id, title=title_id)
+        serializer.save(author=self.request.user, review=review)
 
 
 class GenreViewSet(ListCreateDestroyViewSet):
@@ -150,20 +155,16 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, title=title)
 
 
-class CommentViewSet(viewsets.ModelViewSet):
-    serializer_class = CommentSerializer
-    permission_classes = (
-        IsRoleAdmin | IsRoleModerator | IsAuthorOrReadOnly,
+class TitleViewSet(viewsets.ModelViewSet):
+    queryset = Title.objects.all().annotate(
+        Avg("reviews__score")
     )
+    serializer_class = TitleSerializer
+    permission_classes = (IsRoleAdmin | ReadOnly,)
+    filterset_class = TitleFilter
 
-    def get_queryset(self):
-        review_id = self.kwargs.get('review_id')
-        title_id = self.kwargs.get('title_id')
-        review = get_object_or_404(Review, id=review_id, title=title_id)
-        return review.comments.all()
+    def get_serializer_class(self):
+        if self.action in ('create', 'update', 'partial_update'):
+            return TitlePostSerializer
+        return TitleSerializer
 
-    def perform_create(self, serializer):
-        review_id = self.kwargs.get('review_id')
-        title_id = self.kwargs.get('title_id')
-        review = get_object_or_404(Review, id=review_id, title=title_id)
-        serializer.save(author=self.request.user, review=review)
