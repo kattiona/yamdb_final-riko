@@ -18,7 +18,9 @@ ____
 ## Как запустить проект:
 
 ### Клонировать репозиторий:
-git clone git@github.com:Rinko69/infra_sp2.git
+```python
+    git clone git@github.com:Rinko69/infra_sp2.git
+```
 
 ### Перейдите в директорию infra_sp2\infra и создайте файл .env:
 
