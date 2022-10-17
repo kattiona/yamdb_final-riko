@@ -59,12 +59,12 @@ jobs:
     - name: executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
       with:
+        file: infra/docker-compose.yaml
         host: ${{ secrets.SECRET_HOST }}
         username: ${{ secrets.SECRET_USER }}
         key: ${{ secrets.SECRET_SSH }}
         passphrase: ${{ secrets.SECRET_PASSPHRASE }}
         script: |
-          cd ./yamdb_final/infra/
           sudo docker-compose stop
           sudo docker-compose rm web
           touch .env
