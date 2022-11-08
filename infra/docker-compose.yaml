@@ -7,8 +7,6 @@ services:
       - /var/lib/postgresql/data/
     env_file:
       - ./.env
-    networks:
-      - djangonetwork
   web:
     image: rinko69/yamdb_final:latest
     restart: always
@@ -17,10 +15,6 @@ services:
       - media_value:/app/media/
     depends_on:
       - db
-    links:
-      - db:db
-    networks:
-      - djangonetwork
     env_file:
       - ./.env
   nginx:
@@ -40,6 +34,3 @@ volumes:
   static_value:
   media_value:
 
-networks:
-  djangonetwork:
-    driver: bridge
