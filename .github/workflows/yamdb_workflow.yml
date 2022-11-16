@@ -67,7 +67,7 @@ jobs:
           # passphrase: ${{ secrets.SECRET_PASSPHRASE }}
           script: |
             sudo docker pull rinko69/yamdb_final
-            sudo docker stop $(docker ps -a -q) && sudo docker rm $(docker ps -a -q)
+            sudo docker stop $(sudo docker ps -a -q) && sudo docker rm $(sudo docker ps -a -q)
             sudo docker-compose up -d
 
   # send_message:
